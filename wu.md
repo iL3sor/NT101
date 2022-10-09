@@ -161,7 +161,7 @@ bandit12@bandit:~$ cd /tmp/il3sor
 
 Kiểm tra file type của file data và giải nén lần 1
 
-```
+```console
 bandit12@bandit:/tmp/il3sor$ file data
 data: gzip compressed data, was "data2.bin", last modified: Thu Sep  1 06:30:09 2022, max compression, from Unix, original size modulo 2^32 575
 bandit12@bandit:/tmp/il3sor$ cp data data.gz
@@ -250,7 +250,7 @@ The password is wbWdlBxEir4CaE8LaPhauuOo6pwRmrDw
 
 Kiểm tra file ẩn ta thấy được ssh private key để log in vào level tiếp theo
 
-```
+```console
 bandit13@bandit:~$ ls -al
 total 24
 drwxr-xr-x  2 root     root     4096 Sep  1 06:30 .
