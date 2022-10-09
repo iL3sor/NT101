@@ -19,7 +19,7 @@ NH2SXQwcBdpmTEzi3bvBHMM9H66vVXjL
 
 Đọc file ```-``` và lấy password
 
-```
+```console
 bandit1@bandit:~$ cat ./-
 rRGizSaX8Mk1RTb1CNQoXTcYZWU6lgzi
 ```
