@@ -56,7 +56,7 @@ bandit3@bandit:~/inhere$ cat .hidden
 
 Đọc tất cả các file trong thư mục để tìm được chuỗi ở dạng human-readable
 
-```
+```console
 bandit4@bandit:~/inhere$ cat ./*
 lrIWWI6bB37kxfiCQZqUdOIYfr6eEeqR
 
