@@ -83,6 +83,7 @@ bandit6@bandit:~$ cat /var/lib/dpkg/info/bandit7.password
 z7WtoNQU2XfjmMtWA8u5rN4vzqu4v99S
 ```
 ![Hinh](img/lv6.jpg)
+![Hinh](img/lv6-2.jpg)
 ### Level 7 → Level 8
 
 Dùng grep để tìm đến vị trí của dòng có từ 'millionth'
@@ -149,7 +150,7 @@ Dùng lệnh tr như dưới để decrypt ROT13
 bandit11@bandit:~$ cat data.txt | tr '[N-ZA-Mn-za-m]' '[A-Za-z]'
 The password is JVNBBFSmZwKKOP0XbFXOoW8chDz5yVRv
 ```
-
+![Hinh](img/lv11.jpg)
 ### Level 12 → Level 13
 
 Tạo thư mục il3sor và hexdump file data.txt 
@@ -246,7 +247,7 @@ data8.bin: ASCII text
 bandit12@bandit:/tmp/il3sor$ cat data8.bin 
 The password is wbWdlBxEir4CaE8LaPhauuOo6pwRmrDw
 ```
-
+![Hinh](img/lv12.jpg)
 ### Level 13 → Level 14
 
 Kiểm tra file ẩn ta thấy được ssh private key để log in vào level tiếp theo
@@ -261,7 +262,7 @@ drwxr-xr-x 49 root     root     4096 Sep  1 06:30 ..
 -rw-r--r--  1 root     root      807 Jan  6  2022 .profile
 -rw-r-----  1 bandit14 bandit13 1679 Sep  1 06:30 sshkey.private
 ```
-
+![Hinh](img/lv13.jpg)
 ### Level 14 → Level 15
 
 Tiếp tục ở user bandit13, dùng private key để ssh vào server với vai trò user bandit14 và gửi password đến port 30000 bằng netcat
@@ -273,7 +274,8 @@ bandit14@bandit:~$ cat /etc/bandit_pass/bandit14 | nc localhost 30000
 Correct!
 jN2kgmIXJ6fShzhT2avhotn4Zcka6tnt
 ```
-
+![Hinh](img/lv14.jpg)
+![Hinh](img/lv4-2.jpg)
 ### Level 15 → Level 16
 
 Dùng password ở level trên gửi đến port 30001 qua ssl để lấy password cho level tiếp theo
@@ -285,7 +287,8 @@ read R BLOCK
 Correct!
 JQttfApK4SeyHwDlI9SXGR50qclOAil1
 ```
-
+![Hinh](img/lv15.jpg)
+![Hinh](img/lv15-2.jpg)
 ### Level 16 → Level 17
 
 Dùng nmap quét tất cả các cổng từ port 31000 đến port 32000 với option -sV để xem port nào đang dùng service ssl, sau đó gửi password đến port đó để lấy credential cho level tiếp theo
@@ -305,7 +308,7 @@ PORT      STATE SERVICE     VERSION
 
 echo JQttfApK4SeyHwDlI9SXGR50qclOAil1 | openssl s_client -connect localhost:31790 -ign_eof
 ```
-
+![Hinh](img/lv16.jpg)
 ### Level 17 → Level 18
 
 Dùng private key có được từ level trên, tạo tệp bandit17 để lưu nó (dùng lệnh gedit để mở file và paste private key vào). Sau đó dùng lệnh diff để xem dòng khác nhau giữa 2 file, và đó chính là passoword.
@@ -321,7 +324,7 @@ ssh -i bandit17 bandit17@bandit.labs.overthewire.org -p 2220
 diff passwords.*
 hga5tuuCLF6fFzUpnagiMN8ssu9LFrdg
 ```
-
+![Hinh](img/lv17.jpg)
 ### Level 18 → Level 19
 
 ### Level 19 → Level 20
