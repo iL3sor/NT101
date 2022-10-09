@@ -2,7 +2,7 @@
 
 ssh tới server thông qua port 2220 với username là bandit0 và password là bandit0
 
-```
+```console
 ssh bandit0@bandit.labs.overthewire.org -p 2220
 bandit0@bandit.labs.overthewire.org's password: bandit0 
 ```
@@ -11,7 +11,7 @@ bandit0@bandit.labs.overthewire.org's password: bandit0
 
 Đọc file readme và lấy password
 
-```
+```console
 bandit0@bandit:~$ cat readme
 NH2SXQwcBdpmTEzi3bvBHMM9H66vVXjL
 ```
@@ -28,7 +28,7 @@ rRGizSaX8Mk1RTb1CNQoXTcYZWU6lgzi
 
 Đọc file 'spaces in this filename' và lấy password
 
-```
+```console
 bandit2@bandit:~$ cat 'spaces in this filename'
 aBZ0W5EmUfAf7kHTQeOwd8bauFJ2lAiG
 ```
@@ -37,7 +37,7 @@ aBZ0W5EmUfAf7kHTQeOwd8bauFJ2lAiG
 
 Dùng lệnh ls -al để hiện file ẩn
 
-```
+```console
 bandit3@bandit:~/inhere$ ls -al
 total 12
 drwxr-xr-x 2 root    root    4096 Sep  1 06:30 .
@@ -47,7 +47,7 @@ drwxr-xr-x 3 root    root    4096 Sep  1 06:30 ..
 
 Đọc file ẩn
 
-```
+```console
 bandit3@bandit:~/inhere$ cat .hidden 
 2EW7BBsr6aMMoJ2HjW067dm8EgX26xNe
 ```
@@ -65,7 +65,7 @@ lrIWWI6bB37kxfiCQZqUdOIYfr6eEeqR
 
 Dùng lệnh find với option -size để tìm kiếm theo size, option -type để tìm kiếm file , ! -excutable để tìm các  file không phải file thực thi
 
-```
+```console
 bandit5@bandit:~/inhere$ find ./ -size 1033c -type f ! -executable
 ./maybehere07/.file2
 bandit5@bandit:~/inhere$ cat ./maybehere07/.file2
@@ -76,7 +76,7 @@ P4L4vucdmLnm8I7Vl7jG1ApGSfjYKqJU
 
 Dùng lệnh find với option -user để tìm kiếm theo chủ sở hữu, -group để tìm kiếm theo group sở hữu, -type f để tìm kiếm file  (không tìm kiếm thư mục)
 
-```
+```console
 find / -user bandit7 -group bandit6 -size 33c -type f | grep bandit7
 /var/lib/dpkg/info/bandit7.password
 bandit6@bandit:~$ cat /var/lib/dpkg/info/bandit7.password
@@ -87,7 +87,7 @@ z7WtoNQU2XfjmMtWA8u5rN4vzqu4v99S
 
 Dùng grep để tìm đến vị trí của dòng có từ 'millionth'
 
-```
+```console
 bandit7@bandit:~$ cat data.txt | grep 'millionth'
 millionth       TESKZC0XvTetK0S9xNwm25STk5iWrBvP
 ```
@@ -96,7 +96,7 @@ millionth       TESKZC0XvTetK0S9xNwm25STk5iWrBvP
 
 Sort lại nội dung file theo thứ tự alphabet và dùng lệnh uniq với option -u để tìm các dòng chỉ hiển thị duy nhất một lần.
 
-```
+```console
 bandit8@bandit:~$ cat data.txt | sort | uniq -u
 EN632PlfYiZbn3PhVK3XOGSlNInNE00t
 
@@ -105,7 +105,7 @@ EN632PlfYiZbn3PhVK3XOGSlNInNE00t
 
 Tìm kiếm các dòng có dấu '=' trong file để thấy password
 
-```
+```console
 bandit9@bandit:~$ strings data.txt | grep "="
 =id6
 ========== the
@@ -135,7 +135,7 @@ u-;=
 
 Đọc nội dung file và decode mã base64 bằng lệnh base64 với option --decode
 
-```
+```console
 bandit10@bandit:~$ cat data.txt | base64 --decode
 The password is 6zPeziLdR2RKNdNYFNb6nVCKzphlXHBM
 ```
@@ -144,7 +144,7 @@ The password is 6zPeziLdR2RKNdNYFNb6nVCKzphlXHBM
 
 Dùng lệnh tr như dưới để decrypt ROT13
 
-```
+```console
 bandit11@bandit:~$ cat data.txt | tr '[N-ZA-Mn-za-m]' '[A-Za-z]'
 The password is JVNBBFSmZwKKOP0XbFXOoW8chDz5yVRv
 ```
@@ -153,7 +153,7 @@ The password is JVNBBFSmZwKKOP0XbFXOoW8chDz5yVRv
 
 Tạo thư mục il3sor và hexdump file data.txt 
 
-```
+```console
 bandit12@bandit:~$ mkdir /tmp/il3sor
 bandit12@bandit:~$ xxd -r data.txt /tmp/il3sor/data
 bandit12@bandit:~$ cd /tmp/il3sor
@@ -170,7 +170,7 @@ bandit12@bandit:/tmp/il3sor$ gzip -d -f data.gz
 
 Tiếp tục kiểm tra file type và giải nén lần 2
 
-```
+```console
 bandit12@bandit:/tmp/il3sor$ file data
 data: bzip2 compressed data, block size = 900k
 bandit12@bandit:/tmp/il3sor$ cp data data.bz2
@@ -179,7 +179,7 @@ bandit12@bandit:/tmp/il3sor$ bzip2 -d -f data.bz2
 
 Tiếp tục kiểm tra file type và giải nén lần 3
 
-```
+```console
 bandit12@bandit:/tmp/il3sor$ file data
 data: gzip compressed data, was "data4.bin", last modified: Thu Sep  1 06:30:09 2022, max compression, from Unix, original size modulo 2^32 20480
 bandit12@bandit:/tmp/il3sor$ cp data data.gz
@@ -188,7 +188,7 @@ bandit12@bandit:/tmp/il3sor$ gzip -d -f data.gz
 
 Tiếp tục kiểm tra file type và giải nén lần 4
 
-```
+```console
 bandit12@bandit:/tmp/il3sor$ file data
 data: POSIX tar archive (GNU)
 bandit12@bandit:/tmp/il3sor$ tar -xf data
@@ -199,7 +199,7 @@ data  data5.bin
 
 Tiếp tục kiểm tra file type và giải nén lần 5
 
-```
+```console
 bandit12@bandit:/tmp/il3sor$ file data5.bin 
 data5.bin: POSIX tar archive (GNU)
 bandit12@bandit:/tmp/il3sor$ tar -xf data5.bin
@@ -207,7 +207,7 @@ bandit12@bandit:/tmp/il3sor$ tar -xf data5.bin
 
 Tiếp tục kiểm tra file type và giải nén lần 6
 
-```
+```console
 bandit12@bandit:/tmp/il3sor$ file data6.bin 
 data6.bin: bzip2 compressed data, block size = 900k
 bandit12@bandit:/tmp/il3sor$ bzip2 -d -f data6.bin
@@ -215,7 +215,7 @@ bandit12@bandit:/tmp/il3sor$ bzip2 -d -f data6.bin
 
 Tiếp tục kiểm tra file type và giải nén lần 7
 
-```
+```console
 bandit12@bandit:/tmp/il3sor$ file data6.bin.out
 data6.bin.out: POSIX tar archive (GNU)
 bandit12@bandit:/tmp/il3sor$ tar -xf data6.bin.out
@@ -226,7 +226,7 @@ data  data5.bin  data6.bin.out  data8.bin
 
 Tiếp tục kiểm tra file type và giải nén lần 8
 
-```
+```console
 bandit12@bandit:/tmp/il3sor$ file data8.bin
 data8.bin: gzip compressed data
 
@@ -238,7 +238,7 @@ bandit12@bandit:/tmp/il3sor$ gzip -d -f data8.bin.gz
 
 Kiểm tra file type thấy đã giải nén về file text rồi, ta cat file để lấy flag
 
-```
+```console
 
 bandit12@bandit:/tmp/il3sor$ file data8.bin 
 data8.bin: ASCII text
@@ -265,7 +265,7 @@ drwxr-xr-x 49 root     root     4096 Sep  1 06:30 ..
 
 Tiếp tục ở user bandit13, dùng private key để ssh vào server với vai trò user bandit14 và gửi password đến port 30000 bằng netcat
 
-```
+```console
 bandit13@bandit:~$ ssh -i sshkey.private bandit14@bandit.labs.overthewire.org -p 2220
 
 bandit14@bandit:~$ cat /etc/bandit_pass/bandit14 | nc localhost 30000
@@ -277,7 +277,7 @@ jN2kgmIXJ6fShzhT2avhotn4Zcka6tnt
 
 Dùng password ở level trên gửi đến port 30001 qua ssl để lấy password cho level tiếp theo
 
-```
+```console
 bandit15@bandit:~$ echo jN2kgmIXJ6fShzhT2avhotn4Zcka6tnt | openssl s_client -connect localhost:30001  -ign_eof
 
 read R BLOCK
@@ -289,7 +289,7 @@ JQttfApK4SeyHwDlI9SXGR50qclOAil1
 
 Dùng nmap quét tất cả các cổng từ port 31000 đến port 32000 với option -sV để xem port nào đang dùng service ssl, sau đó gửi password đến port đó để lấy credential cho level tiếp theo
 
-```
+```console
 bandit16@bandit:~$ nmap localhost -p 31000-32000 -sV
 Starting Nmap 7.80 ( https://nmap.org ) at 2022-10-01 04:18 UTC
 Nmap scan report for localhost (127.0.0.1)
@@ -309,12 +309,12 @@ echo JQttfApK4SeyHwDlI9SXGR50qclOAil1 | openssl s_client -connect localhost:3179
 
 Dùng private key có được từ level trên, tạo tệp bandit17 để lưu nó (dùng lệnh gedit để mở file và paste private key vào). Sau đó dùng lệnh diff để xem dòng khác nhau giữa 2 file, và đó chính là passoword.
 
-```
+```console
 echo > bandit17
 gedit bandit17
 ```
 
-```
+```console
 ssh -i bandit17 bandit17@bandit.labs.overthewire.org -p 2220
 
 diff passwords.*
