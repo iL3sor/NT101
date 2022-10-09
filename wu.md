@@ -15,6 +15,7 @@ bandit0@bandit.labs.overthewire.org's password: bandit0
 bandit0@bandit:~$ cat readme
 NH2SXQwcBdpmTEzi3bvBHMM9H66vVXjL
 ```
+![Hinh](img/lv0.jpg)
 ### Level 1 → Level 2
 
 Đọc file ```-``` và lấy password
