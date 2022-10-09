@@ -6,7 +6,7 @@ ssh tới server thông qua port 2220 với username là bandit0 và password l�
 ssh bandit0@bandit.labs.overthewire.org -p 2220
 bandit0@bandit.labs.overthewire.org's password: bandit0 
 ```
-
+![Hinh](img/lv0.jpg)
 ### Level 0 → Level 1
 
 Đọc file readme và lấy password
@@ -15,7 +15,7 @@ bandit0@bandit.labs.overthewire.org's password: bandit0
 bandit0@bandit:~$ cat readme
 NH2SXQwcBdpmTEzi3bvBHMM9H66vVXjL
 ```
-![Hinh](img/lv0.jpg)
+![Hinh](img/lv1.jpg)
 ### Level 1 → Level 2
 
 Đọc file ```-``` và lấy password
@@ -24,7 +24,7 @@ NH2SXQwcBdpmTEzi3bvBHMM9H66vVXjL
 bandit1@bandit:~$ cat ./-
 rRGizSaX8Mk1RTb1CNQoXTcYZWU6lgzi
 ```
-
+![Hinh](img/lv2.jpg)
 ### Level 2 → Level 3
 
 Đọc file ```spaces in this filename``` và lấy password
@@ -33,7 +33,7 @@ rRGizSaX8Mk1RTb1CNQoXTcYZWU6lgzi
 bandit2@bandit:~$ cat 'spaces in this filename'
 aBZ0W5EmUfAf7kHTQeOwd8bauFJ2lAiG
 ```
-
+![Hinh](img/lv3.jpg)
 ### Level 3 → Level 4
 
 Dùng lệnh ls -al để hiện file ẩn
@@ -52,7 +52,7 @@ drwxr-xr-x 3 root    root    4096 Sep  1 06:30 ..
 bandit3@bandit:~/inhere$ cat .hidden 
 2EW7BBsr6aMMoJ2HjW067dm8EgX26xNe
 ```
-
+![Hinh](img/lv4.jpg)
 ### Level 4 → Level 5
 
 Đọc tất cả các file trong thư mục để tìm được chuỗi ở dạng human-readable
@@ -60,8 +60,8 @@ bandit3@bandit:~/inhere$ cat .hidden
 ```console
 bandit4@bandit:~/inhere$ cat ./*
 lrIWWI6bB37kxfiCQZqUdOIYfr6eEeqR
-
 ```
+![Hinh](img/lv5.jpg)
 ### Level 5 → Level 6
 
 Dùng lệnh find với option -size để tìm kiếm theo size, option -type để tìm kiếm file , ! -excutable để tìm các  file không phải file thực thi
@@ -72,7 +72,7 @@ bandit5@bandit:~/inhere$ find ./ -size 1033c -type f ! -executable
 bandit5@bandit:~/inhere$ cat ./maybehere07/.file2
 P4L4vucdmLnm8I7Vl7jG1ApGSfjYKqJU
 ```
-
+![Hinh](img/lv6.jpg)
 ### Level 6 → Level 7
 
 Dùng lệnh find với option -user để tìm kiếm theo chủ sở hữu, -group để tìm kiếm theo group sở hữu, -type f để tìm kiếm file  (không tìm kiếm thư mục)
@@ -83,7 +83,7 @@ find / -user bandit7 -group bandit6 -size 33c -type f | grep bandit7
 bandit6@bandit:~$ cat /var/lib/dpkg/info/bandit7.password
 z7WtoNQU2XfjmMtWA8u5rN4vzqu4v99S
 ```
-
+![Hinh](img/lv7.jpg)
 ### Level 7 → Level 8
 
 Dùng grep để tìm đến vị trí của dòng có từ 'millionth'
@@ -92,7 +92,7 @@ Dùng grep để tìm đến vị trí của dòng có từ 'millionth'
 bandit7@bandit:~$ cat data.txt | grep 'millionth'
 millionth       TESKZC0XvTetK0S9xNwm25STk5iWrBvP
 ```
-
+![Hinh](img/lv8.jpg)
 ### Level 8 → Level 9
 
 Sort lại nội dung file theo thứ tự alphabet và dùng lệnh uniq với option -u để tìm các dòng chỉ hiển thị duy nhất một lần.
@@ -102,6 +102,7 @@ bandit8@bandit:~$ cat data.txt | sort | uniq -u
 EN632PlfYiZbn3PhVK3XOGSlNInNE00t
 
 ```
+![Hinh](img/lv9.jpg)
 ### Level 9 → Level 10
 
 Tìm kiếm các dòng có dấu '=' trong file để thấy password
@@ -140,7 +141,7 @@ u-;=
 bandit10@bandit:~$ cat data.txt | base64 --decode
 The password is 6zPeziLdR2RKNdNYFNb6nVCKzphlXHBM
 ```
-
+![Hinh](img/lv10.jpg)
 ### Level 11 → Level 12
 
 Dùng lệnh tr như dưới để decrypt ROT13
