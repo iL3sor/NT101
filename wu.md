@@ -275,7 +275,7 @@ Correct!
 jN2kgmIXJ6fShzhT2avhotn4Zcka6tnt
 ```
 ![Hinh](img/lv14.jpg)
-![Hinh](img/lv4-2.jpg)
+![Hinh](img/lv14-2.jpg)
 ### Level 15 → Level 16
 
 Dùng password ở level trên gửi đến port 30001 qua ssl để lấy password cho level tiếp theo
