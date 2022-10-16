@@ -327,15 +327,89 @@ hga5tuuCLF6fFzUpnagiMN8ssu9LFrdg
 ![Hinh](img/lv17.jpg)
 ### Level 18 → Level 19
 
+* Khi kết nối đến ssh ở level18 sử dụng password ở level 17 thì ngay lập tức bị thoát ra. 
+![Hinh](img/lv18.1.jpg)
+* Ta sẽ sử dụng Pseudo-TTY và truy cập thẳng vào **/bin/sh**. Pseudo-TTY là 2 file, 1 file master được sử dụng trên các ứng dụng remote (như SSH), còn file slave sẽ được dùng bởi user process. Và file master có thể sử dụng terminal. Ta sẽ sử dụng /bin/sh nhằm tránh bị block bởi bash
+
+![Hinh](img/lv18.2.jpg)
+
+* Sau khi ls -a để thấy được file readme thì cat readme để lấy password cho level 19. 
+```
+$ cat readme    
+awhqfNnAbc1naukrpqDYcF95h7HoMTrC
+```
+
 ### Level 19 → Level 20
 
+* Dùng password ở level 18 để vào bandit 19, sau khi login thành công, dùng lệnh ls thì thấy 1 file tên **bandit20-do**
+
+![](img/lv19.1.jpg)
+* Dùng lệnh file để kiểm tra tập tin này. 
+```
+bandit19@bandit:~$ file bandit20-do 
+bandit20-do: setuid ELF 32-bit LSB executable, Intel 80386, version 1 (SYSV), dynamically linked, interpreter /lib/ld-linux.so.2, BuildID[sha1]=532dd885fc767d9543f333a2803588ea6fe2a83f, for GNU/Linux 3.2.0, not stripped
+```
+Suy ra đây là một file **setuid** có thể thực thi. Thử thực thi file này, ta được 
+
+![](img/lv19.2.jpg)
+Ta thấy dù đang ở user bandit19 nhưng ta vẫn có thể thực thi một số lệnh với permision của user bandit20. 
+* Vì vậy ta dùng cat để lấy password cho level 20 bằng câu lệnh bên dưới. 
+```
+bandit19@bandit:~$ ./bandit20-do cat /etc/bandit_pass/bandit20
+VxCazJaVykI6W36BkBU0mJTCM8rR95XT
+```
 ### Level 20 → Level 21
+* Sau khi dùng pass ở lv trước để vào bandit 20 thành công, dùng lệnh ls và file thì ta thấy file **suconnect** là file setuid
+![](img/lv20.1.jpg)
+Thử thực thi tập tin này: 
+```
+bandit20@bandit:~$ ./suconnect 
+Usage: ./suconnect <portnumber>
+This program will connect to the given port on localhost using TCP. If it receives the correct password from the other side, the next password is transmitted back.
+```
+- Ta thấy usage của file này cần portnumber. Và chương trình này sẽ kết nối tới 1 port ở localhost và so sánh password, nếu giống nhau thì sẽ trả về password cho lv tiếp theo. 
 
+- Ta mở một terminal mới và bật netcat để lắng nghe ở port 4005 và truyền file password của bandit20 vào. Khi file **suconnect** kết nối ở port 4005, password matches và nó trả về password của bandit21.
+
+- Ta thu được pass cho lv 21 là: NvEJF7oVjkddltPSrdKEFOllh9V1IBcq
+
+![](img/lv20.2.jpg)
+![](img/lv20.3.jpg)
 ### Level 21 → Level 22
+* Sau khi dùng pass ở lv trước để vào bandit 21 thành công, theo hướng dẫn của đề bài, em di chuyển vào thư mục /etc/cron.d và list ra những tập tin trong đây. Ta thấy có nhiều tập tin đã được định giờ trước trong thư mục này, tuy nhiên ta sẽ kiểm tra loại file của **cronjob_bandit22** và thấy đây là một file text. 
+- Ta thử cat nội dung của file này và được kết quả như trong hình
+![](img/lv21.1.jpg)
 
+- Nội dung của file **cronjob_bandit22** chứa một đường dẫn tập tin dẫn đến file script **cronjob_bandit22.sh**
+- Em thử đọc nội dung của file script này bằng lệnh cat 
+![](img/lv21.2.jpg)
+
+- Bên trong file script này, dòng đầu tiên nó cấp quyền cho tập tin **/tmp/t7O6lds9S0RqQh9aMcz6ShpAoZKF7fgv** và ở dòng 2 nó chuyển password của bandit22 vào tập tin này. Do đó, em tiến hành cat tập tin này để lấy pass cho lv 22. 
+```
+bandit21@bandit:/etc/cron.d$ cat /tmp/t7O6lds9S0RqQh9aMcz6ShpAoZKF7fgv
+WdDozAdTM2z9DiFEQ2mGlwngMfj4EZff
+```
 ### Level 22 → Level 23
+* Sau khi dùng pass ở lv trước để vào bandit22 thành công, theo hướng dẫn của đề bài, em di chuyển vào thư mục /etc/cron.d và list ra những tập tin trong đây. Ta thấy có nhiều tập tin đã được định giờ trước trong thư mục này, tuy nhiên ta sẽ kiểm tra loại file của **cronjob_bandit23** và thấy đây là một file text. 
+- Ta thử cat nội dung của file này và được kết quả tương tự như lv 22, tuy nhiên nội dung file script khác. 
+- Cụ thể, có 2 biến, biến myname và biến target. Biến myname sẽ chứa tên của user bandit hiện tại (whoami). Biến mytarget sẽ chứa một chuỗi được mã hóa md5, chuỗi này là chuỗi "echo I am user $myname". 
+- 2 dòng tiếp theo có nội dung là copy password từ /etc/bandit_pass/myname sang /tmp/$mytarget. 
+
+![](img/lv22.1.jpg)
+- Ta thử thay đổi biến myname thành bandit23 và thực hiện cat /tmp/$mytarget để xem kết quả như thế nào. 
+![](img/lv22.2.jpg)
+
+```
+bandit22@bandit:/etc/cron.d$ cat /tmp/8ca319486bfbbc3663ea0fbe81326349
+QYw0Y2aiA672PsMmh9puTQuhoz8SyR2G
+```
+Ta thu được pass cho lv 23 là: QYw0Y2aiA672PsMmh9puTQuhoz8SyR2G
 
 ### Level 23 → Level 24
+- Tương tự như lv 22, ta tiến hành đọc file script của **cronjob_bandit24.sh**
+![](img/lv23.1.jpg)
+- Kịch bản file script gồm biến myname chứa nội dung user bandit. Sau đó chuyển vào thư mục **/var/spool/$myname/foo**. Tại đây,   nó khởi tạo một vòng for có chức năng thực thi và xóa tất cả các scripts có trong thư mục hiện tại. Tuy nhiên, khi nó gặp script của user bandit23, chương trình sẽ timeout 60s trước khi thực thi nó rồi mới xóa. 
+
 
 ### Level 24 → Level 25
 
