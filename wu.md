@@ -461,20 +461,44 @@ c7GvcKlw9mC7aUQaPx7nwFstuAIBw1o1
 ### Level 26 → Level 27
 
 - Sau khi login vào lv26 thành công, dùng lệnh ls em thấy có 1 file bandit27-do. Kiểm tra loại file này thì em thấy đây là một file setuid.
-- Giống như cách làm ở lv20, em dễ dàng tìm được password cho lv27. 
+
+- Giống như cách làm ở lv20, em dễ dàng tìm được password cho lv27 là `YnQpBuifNMas1hcUFk70ZmqkhUU2EuaS`
 ![](img/lv27.1.jpg)
-YnQpBuifNMas1hcUFk70ZmqkhUU2EuaS
 
 ### Level 27 → Level 28
 
+AVanL161y9rsbcJIsFHuw35rjaOM19nR
+
 ### Level 28 → Level 29
+- Sau khi clone bandit28-git về, em tiến hành ls trong thư mục repo thì thấy file README.md, bên trong là hint để lấy bandit lv 29
+![](img/lv28.1.jpg)
+![](img/lv28.2.jpg)
 
-### Level 28 → Level 30
+- Em tiến hành git log để xem lịch sử toàn bộ quá trình thì phát hiện có tới 3 commit. Đầu tiên là "fix info leak", tiếp theo là "add missing data" và cuối cùng là tạo file README.md 
+![](img/lv28.3.jpg)
+- Em lần lượt xem nội dung của các lượt git commit bằng lệnh `git show <commit id>`
+- Ở lần commit đầu tiên, không có thông tin password. 
+![](img/lv28.4.jpg)
+- Tuy nhiên khi xem ở commit thứ 2 thì e đã tìm được password cho lv29
+![](img/lv28.5.jpg)
 
-### Level 28 → Level 31
+- Vậy pass cho lv29 là `tQKvmcwNYcFS6vmPHIUSI3ShmsrQZK8S`
 
-### Level 28 → Level 32
+### Level 29 → Level 30
+`xbhV3HpNGlTIdnjUrdAlPzc2L6y9EOnS`
 
-### Level 28 → Level 33
+### Level 30 → Level 31
 
-### Level 28 → Level 34
+`OoffzGDlzhAlerFJ2cAiz1D41JW1Mhmt`
+
+### Level 31 → Level 32
+
+`rmCBvG56y58BXzv98yZGdO7ATVL5dW8y`
+
+### Level 32 → Level 33
+
+
+`odHo63fHiFqcWWJG9rLiLDtPm45KzUKy`
+### Level 33 → Level 34
+
+done hihi
