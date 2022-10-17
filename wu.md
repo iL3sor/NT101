@@ -410,12 +410,60 @@ Ta thu được pass cho lv 23 là: QYw0Y2aiA672PsMmh9puTQuhoz8SyR2G
 ![](img/lv23.1.jpg)
 - Kịch bản file script gồm biến myname chứa nội dung user bandit. Sau đó chuyển vào thư mục **/var/spool/$myname/foo**. Tại đây,   nó khởi tạo một vòng for có chức năng thực thi và xóa tất cả các scripts có trong thư mục hiện tại. Tuy nhiên, khi nó gặp script của user bandit23, chương trình sẽ timeout 60s trước khi thực thi nó rồi mới xóa. 
 
+VAfGXJ1PBSsPSnvsjI8p759leLZ9GGar
+
+
 
 ### Level 24 → Level 25
+- Description của đề bài yêu cầu ta kết nối đến localhost ở port 30002. Để nhận được password của lv25 thì cần có pass của lv24 và một pincode gồm 4 số ngẫu nhiên từ 0000 đến 9999. Mỗi field này cách nhau 1 khoảng trắng. 
+- Vì vậy em đã tạo ở 1 file script để bruteforce pincode ở **/tmp/haidang_file**. Nội dung của file script như sau:
+
+![](img/lv24.2.jpg)
+
+-  Sau đó thực thi file script và chuyển pipeline vào kết nối localhost port 30002
+```
+bandit24@bandit:/tmp/haidang_file$ bash script_lv24.sh | nc localhost 30002
+```
+- Đây là kết quả sau khi chạy dòng lệnh trên. 
+![](img/lv24.1.jpg)
+
+- Vậy pass cho lv25 đó là **p7TaowMYrmu23Ol8hiZh9UvD0O9hpx8d**
 
 ### Level 25 → Level 26
+- Sau khi login vào user bandit25, ta thực thi ls thì xuất hiện file bandit26.sshkey là private key để truy cập ssh đến bandit26.
 
+![](img/lv25.1.jpg)
+
+- Ta thực thi ssh đến bandit26 bằng lệnh: 
+```
+bandit25@bandit:~$ ssh -i bandit26.sshkey bandit26@bandit.labs.overthewire.org -p 2220
+```
+- Tuy nhiên khi vừa log in vào thì connection ngay lập tức bị đóng, dựa vào description của đề bài, em tìm hiểu xem shell login của bandit26 là gì bằng lệnh: 
+![](img/lv25.2.jpg)
+- Tiến hành đọc nội dung của login shell này, ta thấy nó thực thi lệnh more và sau đó exit 0 (thoát ra ngay lập tức). 
+![](img/lv25.3.jpg)
+
+- Vậy ta có thể paypass bằng cách nào, dựa vào tính năng của more, em thu nhỏ terminal đến mức để nó không thực thi được lệnh exit 0. 
+
+- Vì nó không thoát ra, nên từ đây em có thể đổi cấu hình của login shell bằng editor vim. Các câu lệnh như sau: 
+
+```
+v
+:set shell=/bin/sh
+:shell
+```
+- Vậy là ta đã paypass thành công và đã vào được user bandit26. Ta tiến hành lấy password bằng lệnh:
+
+```
+$ cat /etc/bandit_pass/bandit26
+c7GvcKlw9mC7aUQaPx7nwFstuAIBw1o1
+```
 ### Level 26 → Level 27
+
+- Sau khi login vào lv26 thành công, dùng lệnh ls em thấy có 1 file bandit27-do. Kiểm tra loại file này thì em thấy đây là một file setuid.
+- Giống như cách làm ở lv20, em dễ dàng tìm được password cho lv27. 
+![](img/lv27.1.jpg)
+YnQpBuifNMas1hcUFk70ZmqkhUU2EuaS
 
 ### Level 27 → Level 28
 
