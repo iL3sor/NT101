@@ -337,7 +337,7 @@ hga5tuuCLF6fFzUpnagiMN8ssu9LFrdg
 ![Hinh](img/lv18.2.jpg)
 
 * Sau khi ls -a để thấy được file readme thì cat readme để lấy password cho level 19. 
-```
+```console
 $ cat readme    
 awhqfNnAbc1naukrpqDYcF95h7HoMTrC
 ```
@@ -349,7 +349,7 @@ awhqfNnAbc1naukrpqDYcF95h7HoMTrC
 ![](img/lv19.1.jpg)
 
 * Dùng lệnh file để kiểm tra tập tin này. 
-```
+```console
 bandit19@bandit:~$ file bandit20-do 
 bandit20-do: setuid ELF 32-bit LSB executable, Intel 80386, version 1 (SYSV), dynamically linked, interpreter /lib/ld-linux.so.2, BuildID[sha1]=532dd885fc767d9543f333a2803588ea6fe2a83f, for GNU/Linux 3.2.0, not stripped
 ```
@@ -359,7 +359,7 @@ Suy ra đây là một file **setuid** có thể thực thi. Thử thực thi fi
 
 Ta thấy dù đang ở user bandit19 nhưng ta vẫn có thể thực thi một số lệnh với permision của user bandit20. 
 * Vì vậy ta dùng cat để lấy password cho level 20 bằng câu lệnh bên dưới. 
-```
+```console
 bandit19@bandit:~$ ./bandit20-do cat /etc/bandit_pass/bandit20
 VxCazJaVykI6W36BkBU0mJTCM8rR95XT
 ```
@@ -369,7 +369,7 @@ VxCazJaVykI6W36BkBU0mJTCM8rR95XT
 ![](img/lv20.1.jpg)
 
 Thử thực thi tập tin này: 
-```
+```console
 bandit20@bandit:~$ ./suconnect 
 Usage: ./suconnect <portnumber>
 This program will connect to the given port on localhost using TCP. If it receives the correct password from the other side, the next password is transmitted back.
@@ -396,7 +396,7 @@ This program will connect to the given port on localhost using TCP. If it receiv
 ![](img/lv21.2.jpg)
 
 - Bên trong file script này, dòng đầu tiên nó cấp quyền cho tập tin **/tmp/t7O6lds9S0RqQh9aMcz6ShpAoZKF7fgv** và ở dòng 2 nó chuyển password của bandit22 vào tập tin này. Do đó, em tiến hành cat tập tin này để lấy pass cho lv 22. 
-```
+```console
 bandit21@bandit:/etc/cron.d$ cat /tmp/t7O6lds9S0RqQh9aMcz6ShpAoZKF7fgv
 WdDozAdTM2z9DiFEQ2mGlwngMfj4EZff
 ```
@@ -412,7 +412,7 @@ WdDozAdTM2z9DiFEQ2mGlwngMfj4EZff
 
 ![](img/lv22.2.jpg)
 
-```
+```console
 bandit22@bandit:/etc/cron.d$ cat /tmp/8ca319486bfbbc3663ea0fbe81326349
 QYw0Y2aiA672PsMmh9puTQuhoz8SyR2G
 ```
@@ -432,13 +432,13 @@ Ta thu được pass cho lv 23 là: QYw0Y2aiA672PsMmh9puTQuhoz8SyR2G
 
 - Em sẽ copy file này vào `/var/spool/$myname/foo` với mục đích là khi gặp file script em tạo thì tiến trình sẽ timeout60s vì thuộc user bandit23 và thực thi tự động file script này rồi cho password vào đường dẫn em đã tạo sẵn. 
 
-```
+```console
 bandit23@bandit:/tmp/haidang_file$ cp script.sh /var/spool/bandit24/foo
 ```
 
 - Đợi một chút sau đó vào lấy pass cho lv 24 tại đường dẫn đã setup: 
 
-```
+```console
 bandit23@bandit:/tmp/haidang_file$ cat bandit24_pass 
 VAfGXJ1PBSsPSnvsjI8p759leLZ9GGar
 ```
@@ -449,7 +449,7 @@ VAfGXJ1PBSsPSnvsjI8p759leLZ9GGar
 ![](img/lv24.2.jpg)
 
 -  Sau đó thực thi file script và chuyển pipeline vào kết nối localhost port 30002
-```
+```console
 bandit24@bandit:/tmp/haidang_file$ bash script_lv24.sh | nc localhost 30002
 ```
 - Đây là kết quả sau khi chạy dòng lệnh trên. 
@@ -464,7 +464,7 @@ bandit24@bandit:/tmp/haidang_file$ bash script_lv24.sh | nc localhost 30002
 ![](img/lv25.1.jpg)
 
 - Ta thực thi ssh đến bandit26 bằng lệnh: 
-```
+```console
 bandit25@bandit:~$ ssh -i bandit26.sshkey bandit26@bandit.labs.overthewire.org -p 2220
 ```
 - Tuy nhiên khi vừa log in vào thì connection ngay lập tức bị đóng, dựa vào description của đề bài, em tìm hiểu xem shell login của bandit26 là gì bằng lệnh: 
@@ -480,14 +480,14 @@ lệnh more và sau đó exit 0 (thoát ra ngay lập tức).
 
 - Vì nó không thoát ra, nên từ đây em có thể đổi cấu hình của login shell bằng editor vim. Các câu lệnh như sau: 
 
-```
+```console
 v
 :set shell=/bin/sh
 :shell
 ```
 - Vậy là ta đã bypass thành công và đã vào được user bandit26. Ta tiến hành lấy password bằng lệnh:
 
-```
+```console
 $ cat /etc/bandit_pass/bandit26
 c7GvcKlw9mC7aUQaPx7nwFstuAIBw1o1
 ```
@@ -557,13 +557,13 @@ AVanL161y9rsbcJIsFHuw35rjaOM19nR
 `Tag là chức năng đặt tên một cách đơn giản của Git, nó cho phép ta xác định một cách rõ ràng các phiên bản mã nguồn (code) của dự án. Ta có thể coi tag như một branch không thay đổi được. Một khi nó được tạo (gắn với 1 commit cụ thể) thì ta không thể thay đổi lịch sử commit ấy được nữa.` 
 
 - Vậy em tiến hành `git tag -l` để xem tất cả các tag tồn tai. Tại đây em thấy tag secret. 
-```
+```console
 bandit30@bandit:/tmp/haidang_file/lv30/repo$ git tag -l 
 secret
 ```
 - Để đọc được nội dung của tag này thì em dùng lệnh `git show <tag>` - ở bài này thì là `git show secret` và nhận được pass cho lv31.
 
-```
+```console
 bandit30@bandit:/tmp/haidang_file/lv30/repo$ git show secret 
 OoffzGDlzhAlerFJ2cAiz1D41JW1Mhmt
 ```
@@ -599,7 +599,7 @@ repo và ta nhận được password cho lv 32.
 ![](img/lv32.3.jpg)
 
 - Vậy giờ ta có thể lấy được pass cho lv33 bằng lệnh: 
-```
+```console
 $ cat /etc/bandit_pass/bandit33
 odHo63fHiFqcWWJG9rLiLDtPm45KzUKy
 ```
