@@ -421,11 +421,24 @@ Ta thu được pass cho lv 23 là: QYw0Y2aiA672PsMmh9puTQuhoz8SyR2G
 ![](img/lv23.1.jpg)
 
 - Kịch bản file script gồm biến myname chứa nội dung user bandit. Sau đó chuyển vào thư mục **/var/spool/$myname/foo**. Tại đây,   nó khởi tạo một vòng for có chức năng thực thi và xóa tất cả các scripts có trong thư mục hiện tại. Tuy nhiên, khi nó gặp script của user bandit23, chương trình sẽ timeout 60s trước khi thực thi nó rồi mới xóa. 
+ 
+- Dựa vào ý tưởng này, em tạo 1 file script tại `/tmp/haidang_file/`, nội dung của file này là lấy pass của lv24 và đưa nội dung vào tập tin bandit24_pass mà em đã tạo sẵn. 
+- Em sẽ cấp toàn quyền cho cả /tmp/haidang_file và script.sh bằng lệnh `chmod 777 /tmp/haidang_file script.sh`
 
+![](img/lv24.3.jpg)
+
+- Em sẽ copy file này vào `/var/spool/$myname/foo` với mục đích là khi gặp file script em tạo thì tiến trình sẽ timeout60s vì thuộc user bandit23 và thực thi tự động file script này rồi cho password vào đường dẫn em đã tạo sẵn. 
+
+```
+bandit23@bandit:/tmp/haidang_file$ cp script.sh /var/spool/bandit24/foo
+```
+
+- Đợi một chút sau đó vào lấy pass cho lv 24 tại đường dẫn đã setup: 
+
+```
+bandit23@bandit:/tmp/haidang_file$ cat bandit24_pass 
 VAfGXJ1PBSsPSnvsjI8p759leLZ9GGar
-
-
-
+```
 ### Level 24 → Level 25
 - Description của đề bài yêu cầu ta kết nối đến localhost ở port 30002. Để nhận được password của lv25 thì cần có pass của lv24 và một pincode gồm 4 số ngẫu nhiên từ 0000 đến 9999. Mỗi field này cách nhau 1 khoảng trắng. 
 - Vì vậy em đã tạo ở 1 file script để bruteforce pincode ở **/tmp/haidang_file**. Nội dung của file script như sau:
