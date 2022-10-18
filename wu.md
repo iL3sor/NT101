@@ -443,7 +443,7 @@ bandit25@bandit:~$ ssh -i bandit26.sshkey bandit26@bandit.labs.overthewire.org -
 - Tiến hành đọc nội dung của login shell này, ta thấy nó thực thi lệnh more và sau đó exit 0 (thoát ra ngay lập tức). 
 ![](img/lv25.3.jpg)
 
-- Vậy ta có thể paypass bằng cách nào, dựa vào tính năng của more, em thu nhỏ terminal đến mức để nó không thực thi được lệnh exit 0. 
+- Vậy ta có thể bypass bằng cách nào, dựa vào tính năng của more, em thu nhỏ terminal đến mức để nó không thực thi được lệnh exit 0. 
 
 - Vì nó không thoát ra, nên từ đây em có thể đổi cấu hình của login shell bằng editor vim. Các câu lệnh như sau: 
 
@@ -452,7 +452,7 @@ v
 :set shell=/bin/sh
 :shell
 ```
-- Vậy là ta đã paypass thành công và đã vào được user bandit26. Ta tiến hành lấy password bằng lệnh:
+- Vậy là ta đã bypass thành công và đã vào được user bandit26. Ta tiến hành lấy password bằng lệnh:
 
 ```
 $ cat /etc/bandit_pass/bandit26
@@ -485,20 +485,66 @@ AVanL161y9rsbcJIsFHuw35rjaOM19nR
 - Vậy pass cho lv29 là `tQKvmcwNYcFS6vmPHIUSI3ShmsrQZK8S`
 
 ### Level 29 → Level 30
-`xbhV3HpNGlTIdnjUrdAlPzc2L6y9EOnS`
+
+- Sau khi clone bandit29-git về, em tiến hành ls trong thư mục repo thì thấy file README.md, bên trong là hint để lấy bandit lv30
+![](img/lv29.1.jpg)
+- Ta thấy ở password, có dòng chữ `no passwords in production!` và kiểm tra thì thấy hiện tại đang ở branch **master** - có thể hiểu là password chưa được đưa lên production (master) hay nói cách khác là chưa được merge vào branch master.
+
+- Vì vậy em tiến hành thực thi `git branch -a` để xem tất cả các nhánh ở đây, quan sát em thấy ngoài nhánh master thì còn nhiều nhánh khác nữa, đặc biệt có thể thấy là nhánh dev. 
+![](img/lv29.2.jpg)
+- Thực thi `git checkout dev` để chuyển sang nhánh dev và list các thư mục tại đây ta đọc được password của lv30 tại README.md
+![](img/lv29.3.jpg)
+
+- Vậy pass cho lv30 là `xbhV3HpNGlTIdnjUrdAlPzc2L6y9EOnS`
 
 ### Level 30 → Level 31
+-  Cũng như các lv trên, sau khi git clone về, em tiếp tục đọc nội dung file README.md tại đây nhưng lần này không có hint.
+![](img/lv30.jpg) 
+- Em tiến hành `git log` và `git branch -a` nhưng cũng không có manh mối.
+![](img/lv30.1.jpg)
+- Git còn có một lệnh là `git tag`, sơ lược về lệnh này: 
+`Tag là chức năng đặt tên một cách đơn giản của Git, nó cho phép ta xác định một cách rõ ràng các phiên bản mã nguồn (code) của dự án. Ta có thể coi tag như một branch không thay đổi được. Một khi nó được tạo (gắn với 1 commit cụ thể) thì ta không thể thay đổi lịch sử commit ấy được nữa.` 
 
-`OoffzGDlzhAlerFJ2cAiz1D41JW1Mhmt`
+- Vậy em tiến hành `git tag -l` để xem tất cả các tag tồn tai. Tại đây em thấy tag secret. 
+```
+bandit30@bandit:/tmp/haidang_file/lv30/repo$ git tag -l 
+secret
+```
+- Để đọc được nội dung của tag này thì em dùng lệnh `git show <tag>` - ở bài này thì là `git show secret` và nhận được pass cho lv31.
+
+```
+bandit30@bandit:/tmp/haidang_file/lv30/repo$ git show secret 
+OoffzGDlzhAlerFJ2cAiz1D41JW1Mhmt
+```
 
 ### Level 31 → Level 32
+- Cũng như lv trên, sau khi git clone về thì em đọc file README.md
+- Nhiệm vụ của bài này là push tập tin key.txt lên remote repo
 
+![](img/lv31.2.jpg)
+- Tiến hành push, đầu tiên ta sẽ `git add key.txt` để thêm tập tin vào repo. Sau đó `git commit` để lưu lịch sử cho lần push này.  
+![](img/lv31.3.jpg)
+- Sau đó dùng `git push` để đẩy tất cả những thay đổi lên remote repo và ta nhận được password cho lv 32. 
+![](img/lv31.1.jpg)
 `rmCBvG56y58BXzv98yZGdO7ATVL5dW8y`
 
 ### Level 32 → Level 33
+- Không giống như các level về git, lv này sẽ vào một shell - nơi mà các câu lệnh đều nhập vào đều được chuyển thành chữ hoa trước khi biên dịch làm cho câu lệnh không thể thực thi. 
+![](img/lv32.1.jpg)
 
+- Em thử nhập vào đây một biến môi trường bất kì và quan sát thì thấy đối với các biến môi trường thì shell này thực thi bình thường, không chuyển về in hoa. 
+![](img/lv32.2.jpg)
 
-`odHo63fHiFqcWWJG9rLiLDtPm45KzUKy`
+- Như đã biết, biến môi trường `$0` sẽ chứa đường dẫn đến shell đang gọi nó, vì vậy em gọi đến `$0` với mong muốn là lấy được shell ban đầu của hệ thống. 
+- Kết quả sau khi gọi `$0` thì đã vào được shell của lv33 và ta thấy uppershell là một shell cũng nằm trong hệ thống này.
+![](img/lv32.3.jpg)
+
+- Vậy giờ ta có thể lấy được pass cho lv33 bằng lệnh: 
+```
+$ cat /etc/bandit_pass/bandit33
+odHo63fHiFqcWWJG9rLiLDtPm45KzUKy
+```
 ### Level 33 → Level 34
 
-done hihi
+DONE
+
