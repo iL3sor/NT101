@@ -1,4 +1,7 @@
-### Level 0
+## NGUYEN VAN THO - 20521974
+## BUI TAN HAI DANG  - 20520173
+
+## Level 0
 
 ssh tới server thông qua port 2220 với username là bandit0 và password là bandit0
 
