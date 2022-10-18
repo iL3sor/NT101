@@ -344,6 +344,7 @@ awhqfNnAbc1naukrpqDYcF95h7HoMTrC
 * Dùng password ở level 18 để vào bandit 19, sau khi login thành công, dùng lệnh ls thì thấy 1 file tên **bandit20-do**
 
 ![](img/lv19.1.jpg)
+
 * Dùng lệnh file để kiểm tra tập tin này. 
 ```
 bandit19@bandit:~$ file bandit20-do 
@@ -352,6 +353,7 @@ bandit20-do: setuid ELF 32-bit LSB executable, Intel 80386, version 1 (SYSV), dy
 Suy ra đây là một file **setuid** có thể thực thi. Thử thực thi file này, ta được 
 
 ![](img/lv19.2.jpg)
+
 Ta thấy dù đang ở user bandit19 nhưng ta vẫn có thể thực thi một số lệnh với permision của user bandit20. 
 * Vì vậy ta dùng cat để lấy password cho level 20 bằng câu lệnh bên dưới. 
 ```
@@ -360,7 +362,9 @@ VxCazJaVykI6W36BkBU0mJTCM8rR95XT
 ```
 ### Level 20 → Level 21
 * Sau khi dùng pass ở lv trước để vào bandit 20 thành công, dùng lệnh ls và file thì ta thấy file **suconnect** là file setuid
+
 ![](img/lv20.1.jpg)
+
 Thử thực thi tập tin này: 
 ```
 bandit20@bandit:~$ ./suconnect 
@@ -374,14 +378,18 @@ This program will connect to the given port on localhost using TCP. If it receiv
 - Ta thu được pass cho lv 21 là: NvEJF7oVjkddltPSrdKEFOllh9V1IBcq
 
 ![](img/lv20.2.jpg)
+
+
 ![](img/lv20.3.jpg)
 ### Level 21 → Level 22
 * Sau khi dùng pass ở lv trước để vào bandit 21 thành công, theo hướng dẫn của đề bài, em di chuyển vào thư mục /etc/cron.d và list ra những tập tin trong đây. Ta thấy có nhiều tập tin đã được định giờ trước trong thư mục này, tuy nhiên ta sẽ kiểm tra loại file của **cronjob_bandit22** và thấy đây là một file text. 
 - Ta thử cat nội dung của file này và được kết quả như trong hình
+
 ![](img/lv21.1.jpg)
 
 - Nội dung của file **cronjob_bandit22** chứa một đường dẫn tập tin dẫn đến file script **cronjob_bandit22.sh**
 - Em thử đọc nội dung của file script này bằng lệnh cat 
+
 ![](img/lv21.2.jpg)
 
 - Bên trong file script này, dòng đầu tiên nó cấp quyền cho tập tin **/tmp/t7O6lds9S0RqQh9aMcz6ShpAoZKF7fgv** và ở dòng 2 nó chuyển password của bandit22 vào tập tin này. Do đó, em tiến hành cat tập tin này để lấy pass cho lv 22. 
@@ -396,7 +404,9 @@ WdDozAdTM2z9DiFEQ2mGlwngMfj4EZff
 - 2 dòng tiếp theo có nội dung là copy password từ /etc/bandit_pass/myname sang /tmp/$mytarget. 
 
 ![](img/lv22.1.jpg)
+
 - Ta thử thay đổi biến myname thành bandit23 và thực hiện cat /tmp/$mytarget để xem kết quả như thế nào. 
+
 ![](img/lv22.2.jpg)
 
 ```
@@ -407,7 +417,9 @@ Ta thu được pass cho lv 23 là: QYw0Y2aiA672PsMmh9puTQuhoz8SyR2G
 
 ### Level 23 → Level 24
 - Tương tự như lv 22, ta tiến hành đọc file script của **cronjob_bandit24.sh**
+
 ![](img/lv23.1.jpg)
+
 - Kịch bản file script gồm biến myname chứa nội dung user bandit. Sau đó chuyển vào thư mục **/var/spool/$myname/foo**. Tại đây,   nó khởi tạo một vòng for có chức năng thực thi và xóa tất cả các scripts có trong thư mục hiện tại. Tuy nhiên, khi nó gặp script của user bandit23, chương trình sẽ timeout 60s trước khi thực thi nó rồi mới xóa. 
 
 VAfGXJ1PBSsPSnvsjI8p759leLZ9GGar
@@ -425,6 +437,7 @@ VAfGXJ1PBSsPSnvsjI8p759leLZ9GGar
 bandit24@bandit:/tmp/haidang_file$ bash script_lv24.sh | nc localhost 30002
 ```
 - Đây là kết quả sau khi chạy dòng lệnh trên. 
+
 ![](img/lv24.1.jpg)
 
 - Vậy pass cho lv25 đó là **p7TaowMYrmu23Ol8hiZh9UvD0O9hpx8d**
@@ -439,8 +452,12 @@ bandit24@bandit:/tmp/haidang_file$ bash script_lv24.sh | nc localhost 30002
 bandit25@bandit:~$ ssh -i bandit26.sshkey bandit26@bandit.labs.overthewire.org -p 2220
 ```
 - Tuy nhiên khi vừa log in vào thì connection ngay lập tức bị đóng, dựa vào description của đề bài, em tìm hiểu xem shell login của bandit26 là gì bằng lệnh: 
+
 ![](img/lv25.2.jpg)
-- Tiến hành đọc nội dung của login shell này, ta thấy nó thực thi lệnh more và sau đó exit 0 (thoát ra ngay lập tức). 
+
+- Tiến hành đọc nội dung của login shell này, ta thấy nó thực thi 
+lệnh more và sau đó exit 0 (thoát ra ngay lập tức). 
+
 ![](img/lv25.3.jpg)
 
 - Vậy ta có thể bypass bằng cách nào, dựa vào tính năng của more, em thu nhỏ terminal đến mức để nó không thực thi được lệnh exit 0. 
@@ -462,7 +479,9 @@ c7GvcKlw9mC7aUQaPx7nwFstuAIBw1o1
 
 - Sau khi login vào lv26 thành công, dùng lệnh ls em thấy có 1 file bandit27-do. Kiểm tra loại file này thì em thấy đây là một file setuid.
 
-- Giống như cách làm ở lv20, em dễ dàng tìm được password cho lv27 là `YnQpBuifNMas1hcUFk70ZmqkhUU2EuaS`
+- Giống như cách làm ở lv20, em dễ dàng tìm được password cho 
+lv27 là `YnQpBuifNMas1hcUFk70ZmqkhUU2EuaS`
+
 ![](img/lv27.1.jpg)
 
 ### Level 27 → Level 28
@@ -471,15 +490,22 @@ AVanL161y9rsbcJIsFHuw35rjaOM19nR
 
 ### Level 28 → Level 29
 - Sau khi clone bandit28-git về, em tiến hành ls trong thư mục repo thì thấy file README.md, bên trong là hint để lấy bandit lv 29
+
 ![](img/lv28.1.jpg)
+
 ![](img/lv28.2.jpg)
 
 - Em tiến hành git log để xem lịch sử toàn bộ quá trình thì phát hiện có tới 3 commit. Đầu tiên là "fix info leak", tiếp theo là "add missing data" và cuối cùng là tạo file README.md 
+
 ![](img/lv28.3.jpg)
+
 - Em lần lượt xem nội dung của các lượt git commit bằng lệnh `git show <commit id>`
 - Ở lần commit đầu tiên, không có thông tin password. 
+
 ![](img/lv28.4.jpg)
+
 - Tuy nhiên khi xem ở commit thứ 2 thì e đã tìm được password cho lv29
+
 ![](img/lv28.5.jpg)
 
 - Vậy pass cho lv29 là `tQKvmcwNYcFS6vmPHIUSI3ShmsrQZK8S`
@@ -487,21 +513,30 @@ AVanL161y9rsbcJIsFHuw35rjaOM19nR
 ### Level 29 → Level 30
 
 - Sau khi clone bandit29-git về, em tiến hành ls trong thư mục repo thì thấy file README.md, bên trong là hint để lấy bandit lv30
+
 ![](img/lv29.1.jpg)
+
 - Ta thấy ở password, có dòng chữ `no passwords in production!` và kiểm tra thì thấy hiện tại đang ở branch **master** - có thể hiểu là password chưa được đưa lên production (master) hay nói cách khác là chưa được merge vào branch master.
 
 - Vì vậy em tiến hành thực thi `git branch -a` để xem tất cả các nhánh ở đây, quan sát em thấy ngoài nhánh master thì còn nhiều nhánh khác nữa, đặc biệt có thể thấy là nhánh dev. 
+
 ![](img/lv29.2.jpg)
+
 - Thực thi `git checkout dev` để chuyển sang nhánh dev và list các thư mục tại đây ta đọc được password của lv30 tại README.md
+
 ![](img/lv29.3.jpg)
 
 - Vậy pass cho lv30 là `xbhV3HpNGlTIdnjUrdAlPzc2L6y9EOnS`
 
 ### Level 30 → Level 31
 -  Cũng như các lv trên, sau khi git clone về, em tiếp tục đọc nội dung file README.md tại đây nhưng lần này không có hint.
+
 ![](img/lv30.jpg) 
+
 - Em tiến hành `git log` và `git branch -a` nhưng cũng không có manh mối.
+
 ![](img/lv30.1.jpg)
+
 - Git còn có một lệnh là `git tag`, sơ lược về lệnh này: 
 `Tag là chức năng đặt tên một cách đơn giản của Git, nó cho phép ta xác định một cách rõ ràng các phiên bản mã nguồn (code) của dự án. Ta có thể coi tag như một branch không thay đổi được. Một khi nó được tạo (gắn với 1 commit cụ thể) thì ta không thể thay đổi lịch sử commit ấy được nữa.` 
 
@@ -522,21 +557,29 @@ OoffzGDlzhAlerFJ2cAiz1D41JW1Mhmt
 - Nhiệm vụ của bài này là push tập tin key.txt lên remote repo
 
 ![](img/lv31.2.jpg)
+
 - Tiến hành push, đầu tiên ta sẽ `git add key.txt` để thêm tập tin vào repo. Sau đó `git commit` để lưu lịch sử cho lần push này.  
+
 ![](img/lv31.3.jpg)
-- Sau đó dùng `git push` để đẩy tất cả những thay đổi lên remote repo và ta nhận được password cho lv 32. 
+
+- Sau đó dùng `git push` để đẩy tất cả những thay đổi lên remote 
+repo và ta nhận được password cho lv 32. 
+
 ![](img/lv31.1.jpg)
 `rmCBvG56y58BXzv98yZGdO7ATVL5dW8y`
 
 ### Level 32 → Level 33
 - Không giống như các level về git, lv này sẽ vào một shell - nơi mà các câu lệnh đều nhập vào đều được chuyển thành chữ hoa trước khi biên dịch làm cho câu lệnh không thể thực thi. 
+
 ![](img/lv32.1.jpg)
 
 - Em thử nhập vào đây một biến môi trường bất kì và quan sát thì thấy đối với các biến môi trường thì shell này thực thi bình thường, không chuyển về in hoa. 
+
 ![](img/lv32.2.jpg)
 
 - Như đã biết, biến môi trường `$0` sẽ chứa đường dẫn đến shell đang gọi nó, vì vậy em gọi đến `$0` với mong muốn là lấy được shell ban đầu của hệ thống. 
 - Kết quả sau khi gọi `$0` thì đã vào được shell của lv33 và ta thấy uppershell là một shell cũng nằm trong hệ thống này.
+
 ![](img/lv32.3.jpg)
 
 - Vậy giờ ta có thể lấy được pass cho lv33 bằng lệnh: 
